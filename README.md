@@ -2,8 +2,8 @@
 ## Zur Artikelserie
 
 * [Zu Teil 1 in Java Aktuell 2/22](https://www.doag.org/de/home/news/java-aktuell-022022-architektur/)
-* Zu Teil 2 in Java Aktuell 3/22: Release 13.05.2022
-* Zu Teil 3 in Java Aktuell 2/22: Release 08.07.2022
+* [Zu Teil 2 in Java Aktuell 3/22](https://www.doag.org/de/home/news/java-aktuell-3-22-security/)
+* Zu Teil 3 in Java Aktuell 4/22: Release 08.07.2022
 
 ## Output Adapter Factory
 

@@ -4,7 +4,7 @@
 
 * [Zu Teil 1 in Java Aktuell 2/22](https://www.doag.org/de/home/news/java-aktuell-022022-architektur/)
 * [Zu Teil 2 in Java Aktuell 3/22](https://www.doag.org/de/home/news/java-aktuell-3-22-security/)
-* Zu Teil 3 in Java Aktuell 4/22: Release 08.07.2022
+* [Zu Teil 3 in Java Aktuell 4/22](https://www.doag.org/de/mitmachen/java-aktuell-archiv/zeitschrift/java-aktuell-04-2022-microservices/)
 
 ## Hinweis
 Der Quellcode hat nur das Ziel, die in der Artikelserie beschriebenen Konzepte zur verdeutlichen. Der Code ist nicht lauffähig.

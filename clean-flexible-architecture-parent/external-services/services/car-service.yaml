@@ -1,0 +1,559 @@
+openapi: 3.0.1
+info:
+  title: Car and Car Rating Service
+  description: Query car masterdata and rate car
+  contact:
+    name: Matthias Eschhold
+    email: matthias.eschhold@novatec-gmbh.de
+  version: 1.0.0
+servers:
+  - url: http://localhost:7000
+    description: Endpoint for development environment (DEV)
+tags:
+  - name: CarRating
+    description: create and calucalte car rating
+  - name: Cars
+    description: query car masterdata
+  - name: System
+    description: Login and logout
+paths:
+
+  /logout:
+    delete:
+      tags:
+        - System
+      summary: Logout at Car Service Authenticator
+      operationId: doLogout
+      parameters:
+        - name: apiKey
+          in: header
+          description: internal API-Key
+          required: true
+          schema:
+            type: string
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+
+  /login:
+    post:
+      tags:
+        - System
+      summary: Login at Car Service Authenticator
+      operationId: doLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BasicAuth'
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+
+
+  /cars/{id}:
+    get:
+      tags:
+        - Cars
+      summary: Liefert die Stammdaten eines Fahrzeugs
+      operationId: getCar
+      parameters:
+        - name: apiKey
+          in: header
+          description: Car-API-Key (BearerToken)
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID of car
+          required: true
+          schema:
+            type: string
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+  /cars/{id}/masterdata:
+    get:
+      tags:
+        - Cars
+      summary: Liefert die Stammdaten eines Fahrzeugs
+      operationId: getCarMasterData
+      parameters:
+        - name: apiKey
+          in: header
+          description: Car-API-Key (BearerToken)
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID of car
+          required: true
+          schema:
+            type: string
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarMasterdata'
+
+
+  /car-ratings/{id}/calculate:
+    put:
+      tags:
+        - CarRating
+      summary: Erzeugt eine initiale Fahrzeugbewertung
+      operationId: updateCarRating
+      parameters:
+        - name: apiKey
+          in: header
+          description: Car-API-Key (BearerToken)
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Car-API-Key (BearerToken)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarRating'
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarRating'
+
+  /car-ratings:
+    post:
+      tags:
+        - CarRating
+      summary: Erzeugt eine initiale Fahrzeugbewertung
+      operationId: createCarRating
+      parameters:
+        - name: apiKey
+          in: header
+          description: Car-API-Key (BearerToken)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarRating'
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarRating'
+  /car-ratings/{id}/car:
+    post:
+      tags:
+        - CarRating
+      summary: Erzeugt eine ein Fahrzeug für die Fahrzeugbewertung
+      operationId: createCarForRating
+      parameters:
+        - name: apiKey
+          in: header
+          description: Car-API-Key (BearerToken)
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Car-API-Key (BearerToken)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiAnswer'
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+components:
+  schemas:
+
+    ApiAnswer:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        status:
+          type: string
+        message:
+          type: string
+
+    BasicAuth:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    CarModel:
+      type: object
+      properties:
+        modelId:
+          type: string
+        transmissionId:
+          type: string
+        description:
+          type: string
+
+    Engine:
+      type: object
+      properties:
+        engineId:
+          type: string
+        fuelType:
+          type: string
+
+    Car:
+      type: object
+      properties:
+        objectId:
+          type: string
+        registrationNumber:
+          type: string
+        mileage:
+          type: number
+        masterdata:
+          $ref: '#/components/schemas/CarMasterdata'
+
+    CarMasterdata:
+      type: object
+      properties:
+        objectId:
+          type: string
+        engine:
+          $ref: '#/components/schemas/Engine'
+        model:
+          $ref: '#/components/schemas/CarModel'
+        vin:
+          type: string
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarEquipment'
+
+    CarEquipment:
+      type: object
+      properties:
+        objectId:
+          type: string
+        description:
+          type: string
+        equipmentNumber:
+          type: string
+
+    RatingValue:
+      type: object
+      properties:
+        value:
+          type: number
+        name:
+          type: string
+
+    CarRating:
+      type: object
+      properties:
+        ratingId:
+          type: number
+        car:
+          $ref: '#/components/schemas/Car'
+        ratingValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingValue'

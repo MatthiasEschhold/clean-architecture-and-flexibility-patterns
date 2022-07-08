@@ -41,7 +41,7 @@ befindet sich im Package [fahrzeugbewertung.facade](https://github.com/MatthiasE
 Die Fassade für das komplizierte externe Systeme nutzt diese Use Case zur Orchestrierung der fachlichen
 Teilfunktionen. Aus Sicht der Kern der Domäne, wird diese Komplexität in der Fassade gekapselt.
 
-![Output Adapter Command Facade](adapterfacade.png)
+![Output Adapter Command Facade](clean-flexible-architecture-parent/adapterfacade.png)
 
 ## Shared Output Adapter Pattern
 

@@ -1,0 +1,45 @@
+@startuml
+
+package "domain.service" {
+    class FahrzeugbewertungsService
+}
+
+package "usecase.out" {
+    interface CreateFahrzeugbewertung
+}
+
+package "adapterfacade" {
+    class FahrzeugbewertungsAdapterFacade
+
+    package "usecase" {
+        interface BewertungAnlegenCommand
+        interface BewertungDurchfuehrenCommand
+        interface FahrzeugHinzufuegenCommand
+        interface LoginCommand
+        interface LogoutCommand
+        interface ReadCredentialsCommand
+    }
+}
+
+package "adapter.out" as adapterOut {
+
+}
+
+CreateFahrzeugbewertung <|-- FahrzeugbewertungsAdapterFacade
+FahrzeugbewertungsService --> CreateFahrzeugbewertung
+
+FahrzeugbewertungsAdapterFacade --> BewertungAnlegenCommand
+FahrzeugbewertungsAdapterFacade --> BewertungDurchfuehrenCommand
+FahrzeugbewertungsAdapterFacade --> FahrzeugHinzufuegenCommand
+FahrzeugbewertungsAdapterFacade --> LoginCommand
+FahrzeugbewertungsAdapterFacade --> LogoutCommand
+FahrzeugbewertungsAdapterFacade --> ReadCredentialsCommand
+
+BewertungAnlegenCommand <|-- adapterOut
+BewertungDurchfuehrenCommand <|-- adapterOut
+FahrzeugHinzufuegenCommand <|-- adapterOut
+LoginCommand <|-- adapterOut
+LogoutCommand <|-- adapterOut
+ReadCredentialsCommand <|-- adapterOut
+
+@enduml
